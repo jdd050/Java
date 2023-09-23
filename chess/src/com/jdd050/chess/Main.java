@@ -3,6 +3,7 @@ package com.jdd050.chess;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class Main extends JPanel implements ActionListener {
 	private static final Color darkSquareColor = new Color(205, 157, 111);
 	private static JPanel chessBoard = new JPanel(new GridLayout(ranks, files));
 	private static ArrayList<ArrayList<JPanel>> squares = new ArrayList<ArrayList<JPanel>>();
+	private static ArrayList<JLabel> pieces = new ArrayList<JLabel>();
 	
 	public Main() {
 		// populate ArrayList 
@@ -123,20 +125,193 @@ public class Main extends JPanel implements ActionListener {
 	 *  methods that add and manage chess pieces
 	 */
 	
-	// adds the textures for each piece on the board
+	// adds the textures for each piece on the board and gives them names
 	public void addPieceTextures() {
 		// black pawns
-			try {
-				BufferedImage black_pawn_raw = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_pawn.png"));
-				Image black_pawn = black_pawn_raw.getScaledInstance(black_pawn_raw.getWidth() / 3, black_pawn_raw.getHeight() / 3, Image.SCALE_SMOOTH);
-				for (int i = 0; i < ranks; i++) {
-					JLabel blackPawn = new JLabel(new ImageIcon(black_pawn));
-					squares.get(1).get(i).add(blackPawn);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			BufferedImage black_pawn = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_pawn.png"));
+			for (int i = 0; i < ranks; i++) {
+				JLabel blackPawn = new JLabel(new ImageIcon(black_pawn));
+				
+				blackPawn.setName("BLACK_PAWN_" + (i + 1));
+				
+				pieces.add(blackPawn);
+				squares.get(1).get(i).add(blackPawn);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// black rooks
+		try {
+			BufferedImage black_rook = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_rook.png"));
+			JLabel blackRookL = new JLabel(new ImageIcon(black_rook));
+			blackRookL.setName("BLACK_ROOK_LEFT");
+			JLabel blackRookR = new JLabel(new ImageIcon(black_rook));
+			blackRookR.setName("BLACK_ROOK_RIGHT");
+			
+			pieces.add(blackRookR);
+			pieces.add(blackRookL);
+			
+			squares.get(0).get(0).add(blackRookL);
+			squares.get(0).get(7).add(blackRookR);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// black knights
+		try {
+			BufferedImage black_knight = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_knight.png"));
+			JLabel blackKnightL = new JLabel(new ImageIcon(black_knight));
+			blackKnightL.setName("BLACK_KNIGHT_LEFT");
+			JLabel blackKnightR = new JLabel(new ImageIcon(black_knight));
+			blackKnightR.setName("BLACK_KNIGHT_RIGHT");
+			
+			pieces.add(blackKnightL);
+			pieces.add(blackKnightL);
+			
+			squares.get(0).get(1).add(blackKnightL);
+			squares.get(0).get(6).add(blackKnightR);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// black bishops
+		try {
+			BufferedImage black_bishop = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_bishop.png"));
+			JLabel blackBishopL = new JLabel(new ImageIcon(black_bishop));
+			blackBishopL.setName("BLACK_BISHOP_LEFT");
+			JLabel blackBishopR = new JLabel(new ImageIcon(black_bishop));
+			blackBishopR.setName("BLACK_BISHOP_RIGHT");
+			
+			pieces.add(blackBishopL);
+			pieces.add(blackBishopR);
+			
+			squares.get(0).get(2).add(blackBishopL);
+			squares.get(0).get(5).add(blackBishopR);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// black king
+		try {
+			BufferedImage black_king = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_king.png"));
+			JLabel blackKing = new JLabel(new ImageIcon(black_king));
+			blackKing.setName("BLACK_KING");
+			
+			pieces.add(blackKing);
+			
+			squares.get(0).get(3).add(blackKing);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		// black queen
+		try {
+			BufferedImage black_queen = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\black_queen.png"));
+			JLabel blackQueen = new JLabel(new ImageIcon(black_queen));
+			blackQueen.setName("BLACK_QUEEN");
+			
+			pieces.add(blackQueen);
+			
+			squares.get(0).get(4).add(blackQueen);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white pawns
+		try {
+			BufferedImage white_pawn = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_pawn.png"));
+			for (int i = 0; i < ranks; i++) {
+				JLabel whitePawn = new JLabel(new ImageIcon(white_pawn));
+				whitePawn.setName("WHITE_PAWN_" + (i + 1));
+				
+				pieces.add(whitePawn);
+				
+				squares.get(6).get(i).add(whitePawn);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white rooks
+		try {
+			BufferedImage white_rook = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_rook.png"));
+			JLabel whiteRookL = new JLabel(new ImageIcon(white_rook));
+			whiteRookL.setName("WHITE_ROOK_LEFT");
+			JLabel whiteRookR = new JLabel(new ImageIcon(white_rook));
+			whiteRookR.setName("WHITE_ROOK_RIGHT");
+			
+			pieces.add(whiteRookL);
+			pieces.add(whiteRookR);
+			
+			squares.get(7).get(0).add(whiteRookL);
+			squares.get(7).get(7).add(whiteRookR);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white knights
+		try {
+			BufferedImage white_knight = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_knight.png"));
+			JLabel whiteKnightL = new JLabel(new ImageIcon(white_knight));
+			whiteKnightL.setName("WHITE_KNIGHT_LEFT");
+			JLabel whiteKnightR = new JLabel(new ImageIcon(white_knight));
+			whiteKnightR.setName("WHITE_KNIGHT_RIGHT");
+			
+			pieces.add(whiteKnightL);
+			pieces.add(whiteKnightR);
+			
+			squares.get(7).get(1).add(whiteKnightL);
+			squares.get(7).get(6).add(whiteKnightR);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white bishops
+		try {
+			BufferedImage white_bishop = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_bishop.png"));
+			JLabel whiteBishopL = new JLabel(new ImageIcon(white_bishop));
+			whiteBishopL.setName("WHITE_BISHOP_LEFT");
+			JLabel whiteBishopR = new JLabel(new ImageIcon(white_bishop));
+			whiteBishopR.setName("WHITE_BISHOP_RIGHT");
+			
+			pieces.add(whiteBishopL);
+			pieces.add(whiteBishopR);
+			
+			squares.get(7).get(2).add(whiteBishopL);
+			squares.get(7).get(5).add(whiteBishopR);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white king
+		try {
+			BufferedImage white_king = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_king.png"));
+			JLabel whiteKing = new JLabel(new ImageIcon(white_king));
+			whiteKing.setName("WHITE_KING");
+			
+			pieces.add(whiteKing);
+			
+			squares.get(7).get(3).add(whiteKing);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		// white queen
+		try {
+			BufferedImage white_queen = ImageIO.read(new File("C:\\Users\\joeyd\\OneDrive\\Documents\\GitHub\\Java\\chess\\src\\com\\jdd050\\chess\\assets\\white_queen.png"));
+			JLabel whiteQueen = new JLabel(new ImageIcon(white_queen));
+			whiteQueen.setName("WHITE_QUEEN");
+			
+			pieces.add(whiteQueen);
+			
+			squares.get(7).get(4).add(whiteQueen);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -150,6 +325,11 @@ public class Main extends JPanel implements ActionListener {
 		Main mainPanel = new Main();
 		mainPanel.createGameGrid();
 		mainPanel.addPieceTextures();
+		
+		// assign actionListeners to each piece
+		for (JLabel piece : pieces) {
+			System.out.println(piece.getName());
+		}
 		
 		// make and configure window
 		mainPanel.setBackground(Color.gray);
