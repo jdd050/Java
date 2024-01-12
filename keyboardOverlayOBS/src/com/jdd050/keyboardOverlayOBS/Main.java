@@ -1,6 +1,8 @@
 package com.jdd050.keyboardOverlayOBS;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -35,9 +37,7 @@ public class Main extends JPanel implements ActionListener {
 		br.close();
 	}
 	
-	public Main() throws IOException {
-		this.setBackground(Color.green);
-		
+	public Main() throws IOException {	
 		// load keys to listen to
 		if (keyConfiguration.isFile()) {
 			readFile();
@@ -45,6 +45,17 @@ public class Main extends JPanel implements ActionListener {
 			keyConfiguration.createNewFile();
 			readFile();
 		}
+		
+		this.setBackground(Color.green);
+		
+		// layout
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints gbConstraints = new GridBagConstraints();
+		
+		for (int i = 0; i < keys.size(); i++) {
+			System.out.println(i);
+		}
+		
 	}
 
 	// create the root window
